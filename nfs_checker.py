@@ -80,7 +80,7 @@ def make_daemon_thread(function, thread_name="anon_thread"):
     Thread(target=function, daemon=True, name=thread_name).start()
 
 def init_logger(info_filename='nfs_checker.log', error_filename='nfs_checker_error.log',
-                max_filesize_megabytes=1024, backup_count=1, do_print=True,
+                max_filesize_megabytes=1024, rollover_count=1, do_print=True,
                 name='nfs_checker') -> logging.Logger:
     """
     creates up to 4 log files, each up to size max_filesize_megabytes
@@ -99,8 +99,8 @@ def init_logger(info_filename='nfs_checker.log', error_filename='nfs_checker_err
     file_handler_info = RotatingFileHandler(
         info_filename,
         mode='w',
-        maxBytes=max_filesize_megabytes*1024,
-        backupCount=backup_count)
+        maxBytes=max_filesize_megabytes*1024*1024,
+        backupCount=rollover_count)
     file_handler_info.setFormatter(log_formatter)
     file_handler_info.setLevel(logging.INFO)
     log.addHandler(file_handler_info)
@@ -109,7 +109,7 @@ def init_logger(info_filename='nfs_checker.log', error_filename='nfs_checker_err
         error_filename,
         mode='w',
         maxBytes=max_filesize_megabytes*1024,
-        backupCount=backup_count)
+        backupCount=rollover_count)
     file_handler_error.setFormatter(log_formatter)
     file_handler_error.setLevel(logging.ERROR)
     log.addHandler(file_handler_error)
@@ -188,7 +188,7 @@ def init_config():
             "info_filename" : "nfs_checker.log",
             "error_filename" : "nfs_checker_error.log",
             "max_filesize_megabytes" : "100",
-            "backup_count" : "1"
+            "rollover_count" : "1"
         }
         config['misc'] = {
             "dir_list" : "",
@@ -204,7 +204,7 @@ def init_config():
 if __name__=='__main__':
     CONFIG = init_config()
     LOG = init_logger(CONFIG['logger']['info_filename'], CONFIG['logger']['error_filename'],
-        int(CONFIG['logger']['max_filesize_megabytes']), int(CONFIG['logger']['backup_count']))
+        int(CONFIG['logger']['max_filesize_megabytes']), int(CONFIG['logger']['rollover_count']))
     LOG.info("hello, world!")
 
     time_last_sent_email_s = None
