@@ -7,11 +7,23 @@
     *     and email is enabled in the config
   * send an email containing the report queue, and clear the queue.
 
-# sample config file
+# logging
+logfile names in config can be absolute or relative to cwd
+
+creates up to 4 log files, each up to size max_filesize_megabytes
+  * info_filename
+  * info_filename.1 (rollover)
+  * error_filename
+  * error_filename.1 (rollover)
+
+info_filename contains all logs, including errors
+
+# sample config file:
+gpu_checker_config.ini will be created (.gitignore and chmod 700) in cwd when the script is run for the first time
+* this file contains a cleartext password
+  * should be excluded from source control!
+  * should not be readable by any other user!
 ```
-# nfs_checker_config.ini contains a cleartext password
-#     should be excluded from source control!
-#     should not be readable by any other user!
 [email]
 enabled = True
 to = hpc@it.umass.edu
