@@ -40,7 +40,7 @@ max_email_frequency_min = 30
 info_filename = /opt/logs/nfs_checker.log
 error_filename = /opt/logs/nfs_checker_error.log
 max_filesize_megabytes = 100
-backup_count = 1
+rollover_count = 1
 
 [misc]
 dir_list = 
