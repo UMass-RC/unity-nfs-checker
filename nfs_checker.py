@@ -215,7 +215,7 @@ if __name__=='__main__':
     while True:
         for _dir in dir_list:
             i_time_s = check_dir(_dir)
-            report = f"{_dir} took {i_time_s} seconds to `ls`"
+            report = f"{_dir}\t took {i_time_s}\t seconds to `ls`"
             if i_time_s > float(CONFIG['misc']['min_report_time_s']):
                 LOG.error(report)
                 email_report_queue = email_report_queue + now_str() + '\t' + report + '\n'
