@@ -28,6 +28,7 @@ import configparser
 import sys
 import traceback
 from typing import List
+from multiprocessing import Process
 
 CONFIG = None
 LOG = None
@@ -159,10 +160,15 @@ def send_email(to: str, _from: str, subject: str, body: str, signature: str,
 
     LOG.info("email sent successfully!____________________________________________________")
 
-def check_dir(_dir):
+def check_dir(_dir, timeout_s=2):
+    p = Process(target=os.listdir, args=[_dir])
     before = datetime.datetime.now()
-    os.listdir(_dir)
+    p.start()
+    p.join(timeout=timeout_s)
     after = datetime.datetime.now()
+    p.terminate()
+    if p.exitcode is None:
+        LOG.error(f"check_dir {_dir} timed out at {timeout_s} seconds!")
     duration_s = (after - before).total_seconds()
     return duration_s
 
