@@ -160,7 +160,7 @@ def send_email(to: str, _from: str, subject: str, body: str, signature: str,
 
     LOG.info("email sent successfully!____________________________________________________")
 
-def check_dir(_dir, timeout_s=2):
+def check_dir(_dir, timeout_s=5):
     p = Process(target=os.listdir, args=[_dir])
     before = datetime.datetime.now()
     p.start()
@@ -200,7 +200,7 @@ def init_config():
             "dir_list" : "",
             "min_report_time_s" : "0.25",
             "loop_wait_time_s" : "10",
-            "check_timeout_s" : "2"
+            "check_timeout_s" : "5"
         }
         with open('nfs_checker_config.ini', 'w', encoding='utf-8') as config_file:
             config_file.write(CONFIG_PREPEND)
