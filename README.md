@@ -50,5 +50,5 @@ dir_list =
         /work
 min_report_time_s = 0.25
 loop_wait_time_s = 1
-
+check_timeout_s = 2
 ```
