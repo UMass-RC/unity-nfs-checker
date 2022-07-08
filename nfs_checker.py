@@ -219,7 +219,7 @@ if __name__=='__main__':
     dir_list = parse_multiline_config_list(CONFIG['misc']['dir_list'])
     if len(purge_str(dir_list, '')) == 0:
         raise Exception("there are no directories for me to check!")
-    timeout_s = CONFIG['misc']['timeout_s']
+    timeout_s = CONFIG['misc']['check_timeout_s']
     while True:
         for _dir in dir_list:
             i_time_s = check_dir(_dir, timeout_s)
