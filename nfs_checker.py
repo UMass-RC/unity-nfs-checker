@@ -219,7 +219,7 @@ if __name__=='__main__':
     dir_list = parse_multiline_config_list(CONFIG['misc']['dir_list'])
     if len(purge_str(dir_list, '')) == 0:
         raise Exception("there are no directories for me to check!")
-    timeout_s = int(CONFIG['misc']['check_timeout_s'])
+    timeout_s = float(CONFIG['misc']['check_timeout_s'])
     while True:
         for _dir in dir_list:
             i_time_s = check_dir(_dir, timeout_s)
@@ -236,7 +236,7 @@ if __name__=='__main__':
                 do_email = True
             else:
                 time_since_last_sent_email_s = (datetime.datetime.now() - time_last_sent_email_s).total_seconds()
-                if time_since_last_sent_email_s/60 > int(CONFIG['email']['max_email_frequency_min']):
+                if time_since_last_sent_email_s/60 > float(CONFIG['email']['max_email_frequency_min']):
                     do_email = True
         if do_email and str_to_bool(CONFIG['email']['enabled']):
             time_last_sent_email_s = datetime.datetime.now()
@@ -254,4 +254,4 @@ if __name__=='__main__':
             )
             email_report_queue = ''
 
-        time.sleep(int(CONFIG['misc']['loop_wait_time_s']))
+        time.sleep(float(CONFIG['misc']['loop_wait_time_s']))
