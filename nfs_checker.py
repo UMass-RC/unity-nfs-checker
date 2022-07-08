@@ -199,7 +199,8 @@ def init_config():
         config['misc'] = {
             "dir_list" : "",
             "min_report_time_s" : "0.25",
-            "loop_wait_time_s" : "10"
+            "loop_wait_time_s" : "10",
+            "check_timeout_s" : "2"
         }
         with open('nfs_checker_config.ini', 'w', encoding='utf-8') as config_file:
             config_file.write(CONFIG_PREPEND)
@@ -218,9 +219,10 @@ if __name__=='__main__':
     dir_list = parse_multiline_config_list(CONFIG['misc']['dir_list'])
     if len(purge_str(dir_list, '')) == 0:
         raise Exception("there are no directories for me to check!")
+    timeout_s = CONFIG['misc']['timeout_s']
     while True:
         for _dir in dir_list:
-            i_time_s = check_dir(_dir)
+            i_time_s = check_dir(_dir, timeout_s)
             report = f"{_dir}\t took {i_time_s}\t seconds to `ls`"
             if i_time_s > float(CONFIG['misc']['min_report_time_s']):
                 LOG.error(report)
